@@ -90,8 +90,8 @@ namespace RPGCharacterAnims
                 isJumpHeld = Input.GetButton("Jump");
                 inputLightHit = Input.GetButtonDown("LightHit");
                 inputDeath = Input.GetButtonDown("Death");
-                inputAttackL = Input.GetMouseButton(0); //Input.GetButtonDown("AttackL") ||
-                inputAttackR = Input.GetMouseButton(1); //Input.GetButtonDown("AttackR") ||
+                inputAttackL = Input.GetButtonDown("AttackL");
+                inputAttackR = Input.GetButtonDown("AttackR");
                 inputCastL = Input.GetButtonDown("CastL");
                 inputCastR = Input.GetButtonDown("CastR");
                 inputSwitchUpDown = Input.GetAxisRaw("SwitchUpDown");
@@ -303,10 +303,7 @@ namespace RPGCharacterAnims
         private void Attacking()
         {
 			// Check to make sure Attack and Cast Actions exist.
-			if (rpgCharacterController.HandlerExists("Attack") && rpgCharacterController.HandlerExists("Cast")) { return; }
-            Debug.Log("HADLER ATTACK: " + rpgCharacterController.HandlerExists("Attack") + " - " + rpgCharacterController.HandlerExists("Cast"));
-            Debug.Log("Attacking: " + inputAttackL + " - " + inputAttackR + " - " + rpgCharacterController.CanStartAction("Attack"));
-
+			if (!rpgCharacterController.HandlerExists("Attack") && !rpgCharacterController.HandlerExists("Cast")) { return; }
             if ((inputCastL || inputCastR) && rpgCharacterController.IsActive("Cast")) { rpgCharacterController.EndAction("Cast"); }
             if (!rpgCharacterController.CanStartAction("Attack")) { return; }
             if (inputAttackL) { Debug.Log("PRESSED LEFT"); rpgCharacterController.StartAction("Attack", new Actions.AttackContext("Attack", "Left")); }
